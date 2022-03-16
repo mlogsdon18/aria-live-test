@@ -1,48 +1,29 @@
-import React, { Component } from 'react';
-import './App.css';
-import { FormControl } from './stories/FormControl';
-
-interface MyState {
-  message1: string;
-  message2: string;
-}
-
-interface MyProps {
-
-}
-
-class App extends Component<MyProps, MyState> {
-  constructor(props: MyProps) {
-    super(props);
-  
-
-    this.onSubmit.bind(this);
-  }
-
-  state: MyState = {
-    message1: '',
-    message2: 'already an error' 
-  }
+import { useState } from 'react';
+import FormControl from './stories/FormControl';
+import MessageBlock from './stories/MessageBlock';
+import { MyProvider } from './stories/MyContext';
 
 
-  onSubmit = (event: React.FormEvent<HTMLInputElement>) => {
-   event.preventDefault();
-    this.setState({
-      message1: 'there is an error'
+const App = () => {
+  const [isValid, setIsValid] = useState(true);
+  const [validityMessage, setValidityMessage] = useState('');
+
+  const validityCheck = (event: React.FormEvent<HTMLInputElement>) => {
+    event.preventDefault();
+    return new Promise((resolve) => {
+      setTimeout(resolve, 500);
     });
   }
 
-  render() {
-    const { message1, message2 } = this.state;
-    return (
-      <form>
-        <FormControl message={message1} />
-        <FormControl message="There was an error" />
-        <input type="submit" value="Submit" onClick={this.onSubmit} />
-      </form>
-    );
-  
-  }
-}
+  return (
+    <MyProvider>
+        <MessageBlock />
+        <FormControl isValid={isValid} validityMessage={validityMessage} 
+        onClick={(event) => validityCheck(event).then(() => { setIsValid(false); setValidityMessage('Invalid'); announceAssertive('Invalid Input')})} />
+      </MyProvider>
+   
+  );
+} 
+
 
 export default App;

@@ -1,24 +1,26 @@
-import React, { Component } from "react";
+import { useContext } from "react";
+import MyContext from "./MyContext";
 
-interface FormControlProps {
-  message: string;
+interface props {
+  isValid: boolean;
+  validityMessage: string;
+  onClick: (event: React.FormEvent<HTMLInputElement>) => Promise<void>;
 }
- export const FormControl = ({
-   message,
-  ...props
-}: FormControlProps) => {
 
+const FormControl = ({ isValid, validityMessage, onClick }: props) => {
+   
+    
     return (
-      <div
-        aria-live="polite"
-        className='form-control'
-      >
-        <p>Form Control</p>
-        <input type="text" id="test" name="test" />
-        
-        <p>{message}</p>
-      </div>
+      <form>
+        <div>
+          <p>Form Control</p>
+          <input type='text' id='test' name='test' />
+        </div>
+        <input type='submit' value='Submit' onClick={onClick} />
+        {validityMessage}
+      </form>
     );
   
 };
 
+export default FormControl;
