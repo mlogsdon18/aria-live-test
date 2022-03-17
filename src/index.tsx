@@ -1,15 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { MyProvider } from './components/MyContext';
+import App from './App';
+import { AriaAnnouncerProvider } from './aria-announcer/AriaAnnouncerContext';
 
 ReactDOM.render(
   <React.StrictMode>
-    <MyProvider>
+    <AriaAnnouncerProvider>
       <App />
-    </MyProvider>
+    </AriaAnnouncerProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

@@ -1,14 +1,14 @@
 import { useContext, useState } from 'react';
+import { AriaAnnouncerContext } from './aria-announcer/AriaAnnouncerContext';
 import FormControl from './components/FormControl';
-import MessageBlock from './components/MessageBlock';
-import { MyContext } from './components/MyContext';
+import AriaAnnouncer from './aria-announcer/AriaAnnouncer';
 
 
 const App = () => {
   const [isValid, setIsValid] = useState(true);
   const [validityMessage, setValidityMessage] = useState('');
 
-  const { announcePolite, announceAssertive } = useContext(MyContext);
+  const { announcePolite, announceAssertive } = useContext(AriaAnnouncerContext);
 
   /**
    * Simulate validity AJAX call
@@ -26,7 +26,7 @@ const App = () => {
 
   return (
     <>
-        <MessageBlock />
+        <AriaAnnouncer />
         <FormControl title="First Test" isValid={isValid} validityMessage={validityMessage} 
         onClick={(event) => validityCheck(event).then(() => { 
           setIsValid(false); 

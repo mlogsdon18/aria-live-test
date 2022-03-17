@@ -1,11 +1,11 @@
 
 
 import { useContext } from 'react';
-import { MyContext } from './MyContext';
+import { AriaAnnouncerContext } from './AriaAnnouncerContext';
 
 
-const MessageBlock = () => {
-  const { messages } = useContext(MyContext);
+const AriaAnnouncer = () => {
+  const { messages } = useContext(AriaAnnouncerContext);
   
   return (
     <div
@@ -23,4 +23,4 @@ const MessageBlock = () => {
   );
 }
 
-export default MessageBlock;
+export default AriaAnnouncer;

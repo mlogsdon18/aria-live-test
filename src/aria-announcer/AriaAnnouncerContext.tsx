@@ -5,15 +5,15 @@ interface MessagesModel {
   id: number;
   message: string;
 }
-interface MyContextInterface {
+interface AriaAnnouncerContextInterface {
   messages?: MessagesModel;
   announcePolite?: (newMessage: string) => void;
   announceAssertive?: (newMessage: string) => void;
 }
 
-export const MyContext = createContext<MyContextInterface>({});
+export const AriaAnnouncerContext = createContext<AriaAnnouncerContextInterface>({});
 
-export const MyProvider: FC = ({ children }) => {
+export const AriaAnnouncerProvider: FC = ({ children }) => {
   const [messages, setMessages] = useState({} as MessagesModel);
 
   /**
@@ -60,7 +60,7 @@ export const MyProvider: FC = ({ children }) => {
   }
 
   return (
-    <MyContext.Provider
+    <AriaAnnouncerContext.Provider
       value={{
         messages,
         announcePolite,
@@ -68,7 +68,7 @@ export const MyProvider: FC = ({ children }) => {
       }}
     >
       {children}
-    </MyContext.Provider>
+    </AriaAnnouncerContext.Provider>
   );
 }
 
