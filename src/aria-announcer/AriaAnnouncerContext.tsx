@@ -1,12 +1,9 @@
 import { createContext, FC, useState } from "react";
 import { v4 as uuid } from 'uuid';
 
-interface MessagesModel {
-  id: number;
-  message: string;
-}
+type MessageModel = Record<string, string>;
 interface AriaAnnouncerContextInterface {
-  messages?: MessagesModel;
+  messages?: MessageModel;
   announcePolite?: (newMessage: string) => void;
   announceAssertive?: (newMessage: string) => void;
 }
@@ -14,7 +11,19 @@ interface AriaAnnouncerContextInterface {
 export const AriaAnnouncerContext = createContext<AriaAnnouncerContextInterface>({});
 
 export const AriaAnnouncerProvider: FC = ({ children }) => {
-  const [messages, setMessages] = useState({} as MessagesModel);
+  const [messages, setMessages] = useState<MessageModel>({});
+
+
+  const addMessage = (id: string, newMessage: string) => {
+    setMessages(messages => ({
+      ...messages,
+      [id]: newMessage
+    }));
+  }
+
+  const messageExists = (newMessage: string) => {
+   return Object.values(messages).indexOf(newMessage);
+  }
 
   /**
    *  Checks if newMessage exists in the messages object
@@ -22,16 +31,10 @@ export const AriaAnnouncerProvider: FC = ({ children }) => {
    * 
    */ 
   const announcePolite = (newMessage: string) => {
-    
-    if (Object.values(messages).indexOf(newMessage) === -1) {
+    if (messageExists(newMessage) === -1) {
       const id = uuid();
-     
-      setMessages(messages => ({
-        ...messages,
-        [id]: newMessage
-      }));
+      addMessage(id, newMessage);
     } 
-    
   }
 
   /**
@@ -40,18 +43,12 @@ export const AriaAnnouncerProvider: FC = ({ children }) => {
    *  If it doesn't exist, call announcePolite to add it
    */ 
   const announceAssertive = (newMessage: string) => {
-    if (Object.values(messages).indexOf(newMessage) > -1) {
-        const key = Object.keys(messages).find(key => messages[key as keyof MessagesModel] === newMessage);
+    if (messageExists(newMessage) > -1) {
+        const key = Object.keys(messages).find(key => messages[key] === newMessage);
         if (key) {
-          setMessages(messages => ({
-            ...messages,
-            [key]: ''
-          }));
+          addMessage(key, '');
           setTimeout(() => {
-            setMessages(messages => ({
-              ...messages,
-              [key]: newMessage
-            }));
+            addMessage(key, newMessage);
           }, 500)
         }
     } else {
