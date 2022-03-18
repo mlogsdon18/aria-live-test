@@ -8,7 +8,7 @@ const App = () => {
   const [isValid, setIsValid] = useState(true);
   const [validityMessage, setValidityMessage] = useState('');
 
-  const { announcePolite, announceAssertive } = useContext(AriaAnnouncerContext);
+  const { announcePolite } = useContext(AriaAnnouncerContext);
 
   /**
    * Simulate validity AJAX call
