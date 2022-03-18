@@ -40,11 +40,17 @@ const App = () => {
           if (announcePolite) announcePolite('Another invalid input')})} />
 
 
-        <FormControl title="Test same message with assertive" isValid={isValid} validityMessage={validityMessage} 
+        <FormControl title="Test same message with different id" isValid={isValid} validityMessage={validityMessage} 
         onClick={(event) => validityCheck(event).then(() => { 
           setIsValid(false); 
           setValidityMessage('Invalid'); 
-          if (announceAssertive) announceAssertive('Invalid Input')})} />
+          if (announcePolite) announcePolite('Invalid Input', '12')})} />
+
+          <FormControl title="Test same message with same id" isValid={isValid} validityMessage={validityMessage} 
+        onClick={(event) => validityCheck(event).then(() => { 
+          setIsValid(false); 
+          setValidityMessage('Invalid'); 
+          if (announcePolite) announcePolite('Invalid Input', '12')})} />
       </>
    
   );

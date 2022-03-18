@@ -4,7 +4,7 @@ import { v4 as uuid } from 'uuid';
 type MessageModel = Record<string, string>;
 interface AriaAnnouncerContextInterface {
   messages?: MessageModel;
-  announcePolite?: (newMessage: string) => void;
+  announcePolite?: (newMessage: string, id?: string) => void;
   announceAssertive?: (newMessage: string) => void;
 }
 
@@ -30,11 +30,15 @@ export const AriaAnnouncerProvider: FC = ({ children }) => {
    *  If it does, do nothing. If it doesn't, then generate a unique key and add it to the messages array
    * 
    */ 
-  const announcePolite = (newMessage: string) => {
-    if (messageExists(newMessage) === -1) {
+  const announcePolite = (newMessage: string, id?: string) => {
+    if (id) {
+      if (!(id in messages)) {
+        addMessage(id, newMessage);
+      }
+    } else {
       const id = uuid();
       addMessage(id, newMessage);
-    } 
+    }
   }
 
   /**
