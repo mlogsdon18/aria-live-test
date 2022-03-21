@@ -10,6 +10,8 @@ The aria-announcer folder contains the two things needed to create a functioning
 
 `aria-live="polite"` is all that is currently implemented, as we did not have a use case for assertive.
 
+The component references the messages array from the context. This is an array to allow for multiple messages to be announced if multiple form errors were to return at once
+
 ## FormControl
 
 This component was added in as an example implementation from a developer on another component. It makes a fake AJAX call and then calls announcePolite to add a message to the AriaAnnouncer. In order for this to work properly, the entire App component has to be wrapped in the Provider so that it has access to the announcePolite function.
